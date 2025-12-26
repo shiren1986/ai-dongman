@@ -8,20 +8,22 @@ interface LibraryScreenProps {
   activeTab: Tab;
   switchTab: (tab: Tab) => void;
   onSelectTemplate: (template: Template) => void;
+  language: string;
+  t: (key: string) => string;
 }
 
-const LibraryScreen: React.FC<LibraryScreenProps> = ({ activeTab, switchTab, onSelectTemplate }) => {
+const LibraryScreen: React.FC<LibraryScreenProps> = ({ activeTab, switchTab, onSelectTemplate, language, t }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const categoryRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const categories = [
-    { label: '全部', icon: 'auto_awesome', filter: '' },
-    { label: '热门', icon: 'local_fire_department', filter: 'hot' },
-    { label: '清新', icon: 'water_drop', filter: '清新' },
-    { label: '梦幻', icon: 'cloud', filter: '梦幻' },
-    { label: '赛博', icon: 'bolt', filter: '赛博' },
-    { label: '校园', icon: 'school', filter: '日常' },
-    { label: '唯美', icon: 'palette', filter: '粉色' }
+    { label: t('label_all'), icon: 'auto_awesome', filter: '' },
+    { label: t('label_hot'), icon: 'local_fire_department', filter: 'hot' },
+    { label: t('label_category_fresh'), icon: 'water_drop', filter: '清新' },
+    { label: t('label_category_dreamy'), icon: 'cloud', filter: '梦幻' },
+    { label: t('label_category_cyber'), icon: 'bolt', filter: '赛博' },
+    { label: t('label_category_school'), icon: 'school', filter: '日常' },
+    { label: t('label_category_aesthetic'), icon: 'palette', filter: '粉色' }
   ];
 
   useEffect(() => {
@@ -37,24 +39,13 @@ const LibraryScreen: React.FC<LibraryScreenProps> = ({ activeTab, switchTab, onS
 
   const filteredTemplates = TEMPLATES.filter(tpl => {
     const activeCategory = categories[selectedCategoryIndex];
-    if (activeCategory.label === '全部' || activeCategory.label === '热门') return true;
+    if (activeCategory.label === t('label_all') || activeCategory.label === t('label_hot')) return true;
     return tpl.tag.includes(activeCategory.filter);
   });
 
   return (
-    <div className="h-full flex flex-col pb-24">
-      <header className="sticky top-0 z-20 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <div className="px-4 pt-4 pb-2">
-          <div className="group flex w-full items-center rounded-xl bg-white dark:bg-slate-800 border border-transparent focus-within:border-primary/50 shadow-sm transition-all h-12">
-            <div className="flex h-full items-center justify-center pl-4 text-slate-400">
-              <span className="material-symbols-outlined">search</span>
-            </div>
-            <input 
-              className="flex w-full min-w-0 flex-1 bg-transparent px-3 text-base font-normal text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-0 border-none focus:ring-0 h-full" 
-              placeholder="搜索风格、标签 or 心情..."
-            />
-          </div>
-        </div>
+    <div className="h-full flex flex-col pb-28">
+      <header className="sticky top-0 z-20 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 pt-2">
         <div className="flex gap-2 overflow-x-auto px-4 py-3 no-scrollbar snap-x scroll-smooth">
           {categories.map((cat, idx) => {
             const isActive = selectedCategoryIndex === idx;
@@ -94,11 +85,6 @@ const LibraryScreen: React.FC<LibraryScreenProps> = ({ activeTab, switchTab, onS
                   style={{ backgroundImage: `url(${tpl.imageUrl})` }}
                 ></div>
                 
-                {/* 
-                  Removed the play button overlay from here to simulate auto-playing video behavior 
-                  for dynamic templates in the Library Screen as requested. 
-                */}
-                
                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-3 left-3 right-3 flex flex-col">
                   <span className="text-white text-sm font-bold leading-tight">{tpl.name}</span>
@@ -110,12 +96,12 @@ const LibraryScreen: React.FC<LibraryScreenProps> = ({ activeTab, switchTab, onS
         ) : (
           <div className="col-span-2 py-20 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-3">
             <span className="material-symbols-outlined text-5xl">folder_open</span>
-            <p className="text-sm font-medium">该分类下暂无模板</p>
+            <p className="text-sm font-medium">{t('label_empty')}</p>
           </div>
         )}
       </main>
 
-      <BottomNavigation activeTab={activeTab} onTabChange={switchTab} />
+      <BottomNavigation activeTab={activeTab} onTabChange={switchTab} language={language} />
     </div>
   );
 };

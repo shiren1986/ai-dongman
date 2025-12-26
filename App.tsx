@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Screen, Tab, Template, Asset } from './types';
-import { MOCK_ASSETS } from './constants';
+import { MOCK_ASSETS, TRANSLATIONS } from './constants';
 import SplashScreen from './screens/SplashScreen';
 import LibraryScreen from './screens/LibraryScreen';
 import UploadScreen from './screens/UploadScreen';
@@ -11,13 +11,16 @@ import ProfileScreen from './screens/ProfileScreen';
 import ProScreen from './screens/ProScreen';
 import LanguageScreen from './screens/LanguageScreen';
 import ResultDetailScreen from './screens/ResultDetailScreen';
+import SearchGroundingScreen from './screens/SearchGroundingScreen';
+import SimpleInfoScreen from './screens/SimpleInfoScreen';
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>(Screen.Splash);
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Library);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [language, setLanguage] = useState('zh-CN');
   const [assets, setAssets] = useState<Asset[]>(MOCK_ASSETS);
   const [userAvatar, setUserAvatar] = useState('https://picsum.photos/seed/user/300/300');
 
@@ -28,6 +31,10 @@ const App: React.FC = () => {
       document.documentElement.classList.remove('dark');
     }
   }, [isDarkMode]);
+
+  const t = (key: string) => {
+    return TRANSLATIONS[language]?.[key] || TRANSLATIONS['zh-CN'][key] || key;
+  };
 
   const navigate = (screen: Screen, data?: any) => {
     if (screen === Screen.Upload && data) setSelectedTemplate(data);
@@ -57,14 +64,16 @@ const App: React.FC = () => {
       case Screen.Splash:
         return <SplashScreen onComplete={() => setCurrentScreen(Screen.Library)} />;
       case Screen.Library:
-        return <LibraryScreen activeTab={activeTab} switchTab={switchTab} onSelectTemplate={(t) => navigate(Screen.Upload, t)} />;
+        return <LibraryScreen language={language} t={t} activeTab={activeTab} switchTab={switchTab} onSelectTemplate={(t) => navigate(Screen.Upload, t)} />;
       case Screen.Upload:
-        return <UploadScreen template={selectedTemplate} onBack={() => setCurrentScreen(Screen.Library)} onStartGeneration={() => switchTab(Tab.Assets)} />;
+        return <UploadScreen language={language} t={t} template={selectedTemplate} onBack={() => setCurrentScreen(Screen.Library)} onStartGeneration={() => switchTab(Tab.Assets)} />;
       case Screen.Assets:
-        return <AssetsScreen assets={assets} activeTab={activeTab} switchTab={switchTab} onSelectAsset={(a) => navigate(Screen.ResultDetail, a)} onDeleteAsset={deleteAsset} />;
+        return <AssetsScreen language={language} t={t} assets={assets} activeTab={activeTab} switchTab={switchTab} onSelectAsset={(a) => navigate(Screen.ResultDetail, a)} onDeleteAsset={deleteAsset} />;
       case Screen.Settings:
         return (
           <SettingsScreen 
+            language={language}
+            t={t}
             activeTab={activeTab} 
             switchTab={switchTab} 
             onNavigate={navigate} 
@@ -76,6 +85,8 @@ const App: React.FC = () => {
       case Screen.Profile:
         return (
           <ProfileScreen 
+            language={language}
+            t={t}
             onBack={() => setCurrentScreen(Screen.Settings)} 
             activeTab={activeTab} 
             switchTab={switchTab} 
@@ -84,13 +95,21 @@ const App: React.FC = () => {
           />
         );
       case Screen.Pro:
-        return <ProScreen onBack={() => setCurrentScreen(Screen.Settings)} avatarUrl={userAvatar} />;
+        return <ProScreen language={language} t={t} onBack={() => setCurrentScreen(Screen.Settings)} avatarUrl={userAvatar} />;
       case Screen.Language:
-        return <LanguageScreen onBack={() => setCurrentScreen(Screen.Settings)} />;
+        return <LanguageScreen language={language} setLanguage={setLanguage} onBack={() => setCurrentScreen(Screen.Settings)} />;
       case Screen.ResultDetail:
-        return <ResultDetailScreen asset={currentAsset} onToggleFavorite={toggleFavorite} onBack={() => setCurrentScreen(Screen.Assets)} activeTab={activeTab} switchTab={switchTab} />;
+        return <ResultDetailScreen language={language} t={t} asset={currentAsset} onToggleFavorite={toggleFavorite} onBack={() => setCurrentScreen(Screen.Assets)} activeTab={activeTab} switchTab={switchTab} />;
+      case Screen.PrivacyPolicy:
+        return <SearchGroundingScreen type="google" onBack={() => setCurrentScreen(Screen.Settings)} />;
+      case Screen.UserAgreement:
+        return <SearchGroundingScreen type="youtube" onBack={() => setCurrentScreen(Screen.Settings)} />;
+      case Screen.ContactUs:
+        return <SimpleInfoScreen type="contact" title={t('label_contact')} onBack={() => setCurrentScreen(Screen.Settings)} t={t} />;
+      case Screen.AboutUs:
+        return <SimpleInfoScreen type="about" title={t('label_about')} onBack={() => setCurrentScreen(Screen.Settings)} t={t} />;
       default:
-        return <LibraryScreen activeTab={activeTab} switchTab={switchTab} onSelectTemplate={(t) => navigate(Screen.Upload, t)} />;
+        return <LibraryScreen language={language} t={t} activeTab={activeTab} switchTab={switchTab} onSelectTemplate={(t) => navigate(Screen.Upload, t)} />;
     }
   };
 

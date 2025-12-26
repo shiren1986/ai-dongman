@@ -9,9 +9,11 @@ interface ProfileScreenProps {
   switchTab: (tab: Tab) => void;
   currentAvatar: string;
   onSaveAvatar: (url: string) => void;
+  language: string;
+  t: (key: string) => string;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ onBack, activeTab, switchTab, currentAvatar, onSaveAvatar }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ onBack, activeTab, switchTab, currentAvatar, onSaveAvatar, language, t }) => {
   const [pendingAvatarUrl, setPendingAvatarUrl] = useState(currentAvatar);
 
   // Generate a list of recommended avatar URLs
@@ -29,7 +31,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ onBack, activeTab, switch
           <button onClick={onBack} className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all text-slate-900 dark:text-white">
             <span className="material-symbols-outlined text-[24px]">arrow_back_ios_new</span>
           </button>
-          <h1 className="text-slate-900 dark:text-white text-lg font-bold">个人资料</h1>
+          <h1 className="text-slate-900 dark:text-white text-lg font-bold">{t('header_profile')}</h1>
           <div className="w-10"></div>
         </div>
       </nav>
@@ -47,7 +49,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ onBack, activeTab, switch
         </div>
 
         <div className="px-6 mb-8">
-          <label className="block text-sm font-bold text-slate-800 dark:text-slate-200 mb-2 pl-1">昵称</label>
+          <label className="block text-sm font-bold text-slate-800 dark:text-slate-200 mb-2 pl-1">{t('label_nickname')}</label>
           <div className="flex items-center w-full bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow-sm border border-slate-100 dark:border-slate-700 transition-all">
             <input className="flex-1 bg-transparent border-none text-slate-900 dark:text-white text-base font-medium placeholder-slate-400 focus:ring-0 p-0" type="text" defaultValue="Momo"/>
             <button className="text-primary p-1">
@@ -58,8 +60,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ onBack, activeTab, switch
 
         <div className="mb-10">
           <div className="flex items-center justify-between px-6 mb-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">推荐头像</h3>
-            <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">默认风格</span>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">{t('label_suggestions')}</h3>
+            <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">Avatar Style</span>
           </div>
           <div className="grid grid-cols-5 gap-3 px-6">
             {recommendedAvatars.map((url, i) => {
@@ -91,12 +93,12 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ onBack, activeTab, switch
             className="w-full bg-primary hover:bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
           >
             <span className="material-symbols-outlined text-[22px]">save</span>
-            保存修改
+            {t('btn_save_changes')}
           </button>
         </div>
       </main>
 
-      <BottomNavigation activeTab={activeTab} onTabChange={switchTab} />
+      <BottomNavigation activeTab={activeTab} onTabChange={switchTab} language={language} />
     </div>
   );
 };

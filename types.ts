@@ -8,7 +8,11 @@ export enum Screen {
   Profile = 'profile',
   Pro = 'pro',
   Language = 'language',
-  ResultDetail = 'result_detail'
+  ResultDetail = 'result_detail',
+  PrivacyPolicy = 'privacy_policy',
+  UserAgreement = 'user_agreement',
+  ContactUs = 'contact_us',
+  AboutUs = 'about_us'
 }
 
 export enum Tab {
