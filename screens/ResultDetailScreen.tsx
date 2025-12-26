@@ -45,7 +45,10 @@ const ResultDetailScreen: React.FC<ResultDetailScreenProps> = ({ asset, onBack, 
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-text-main-light dark:text-text-main-dark text-xl font-bold leading-tight">生成成功!</h3>
-                  <p className="text-text-secondary-light dark:text-text-secondary-dark text-sm mt-0.5">已消耗 2 点算力</p>
+                  <div className="flex items-center gap-1 mt-0.5">
+                    <span className="text-text-secondary-light dark:text-text-secondary-dark text-sm">已消耗 2</span>
+                    <span className="material-symbols-outlined text-yellow-500 text-sm filled">monetization_on</span>
+                  </div>
                 </div>
                 <button 
                   onClick={() => onToggleFavorite(asset.id)}

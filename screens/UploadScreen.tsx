@@ -68,7 +68,7 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
               </div>
             </div>
             <div className="text-center px-6">
-              <p className="text-slate-900 dark:text-white font-bold text-lg mb-1">点击上传或拖拽照片</p>
+              <p className="text-slate-900 dark:text-white font-bold text-lg mb-1">点击上传照片</p>
               <p className="text-slate-400 dark:text-slate-500 text-xs">支持 JPG, PNG 格式 (最大 5MB)</p>
             </div>
           </div>
@@ -101,8 +101,9 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
 
         <div className="mt-auto pt-4 flex flex-col gap-4 w-full">
           <div className="flex items-center justify-center gap-1.5">
-            <span className="material-symbols-outlined text-[18px] text-primary filled">bolt</span>
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-300">本次生成消耗：5 算力</span>
+            <span className="material-symbols-outlined text-[20px] text-yellow-500 filled">monetization_on</span>
+            <span className="text-sm font-bold text-slate-700 dark:text-slate-200">本次生成消耗：5</span>
+            <span className="material-symbols-outlined text-[16px] text-yellow-500 filled">monetization_on</span>
           </div>
           <button 
             disabled={isGenerating}
