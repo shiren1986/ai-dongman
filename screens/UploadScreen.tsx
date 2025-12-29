@@ -129,11 +129,11 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
               </div>
             )}
 
-            {/* 已选模板缩略图 - 放大显示 */}
+            {/* 已选模板缩略图 - 边框缩小调整 (size-48保持, p-3 -> p-1.5, ring-[12px] -> ring-4) */}
             {template && (
-              <div className="absolute top-8 left-8 z-20">
-                <div className="size-24 rounded-3xl overflow-hidden bg-white dark:bg-slate-800 p-1.5 border border-slate-100 dark:border-slate-700 shadow-2xl backdrop-blur-md ring-8 ring-white/10">
-                  <img src={template.imageUrl} alt="Template" className="w-full h-full object-cover rounded-2xl" />
+              <div className="absolute top-10 left-10 z-20">
+                <div className="size-48 rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-800 p-1.5 border border-slate-100 dark:border-slate-700 shadow-2xl backdrop-blur-md ring-4 ring-white/20">
+                  <img src={template.imageUrl} alt="Template" className="w-full h-full object-cover rounded-[2rem]" />
                 </div>
               </div>
             )}
