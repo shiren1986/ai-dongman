@@ -27,29 +27,20 @@ const AssetsScreen: React.FC<AssetsScreenProps> = ({ assets, activeTab, switchTa
   useEffect(() => {
     const activeTabEl = tabRefs.current[selectedTabIndex];
     if (activeTabEl) {
-      activeTabEl.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      });
+      activeTabEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
   }, [selectedTabIndex]);
 
   const filteredAssets = useMemo(() => {
     const activeTabKey = tabs[selectedTabIndex].key;
-    let result = [...assets];
-
-    if (activeTabKey !== 'all') {
-      result = result.filter(a => a.status === activeTabKey);
-    }
-
-    return result;
+    if (activeTabKey === 'all') return assets;
+    return assets.filter(a => a.status === activeTabKey);
   }, [selectedTabIndex, assets]);
 
   return (
-    <div className="h-full flex flex-col pb-28 bg-background-light dark:bg-background-dark relative">
-      <div className="sticky top-0 z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md pt-6 pb-2">
-        <div className="flex gap-2.5 px-4 overflow-x-auto no-scrollbar snap-x scroll-smooth">
+    <div className="w-full h-full flex flex-col relative bg-background-light dark:bg-background-dark overflow-hidden">
+      <div className="sticky top-0 z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md pt-8 pb-4">
+        <div className="flex gap-4 px-8 overflow-x-auto no-scrollbar snap-x">
           {tabs.map((tab, idx) => {
             const isActive = selectedTabIndex === idx;
             return (
@@ -57,21 +48,21 @@ const AssetsScreen: React.FC<AssetsScreenProps> = ({ assets, activeTab, switchTa
                 key={idx}
                 ref={(el) => { tabRefs.current[idx] = el; }}
                 onClick={() => setSelectedTabIndex(idx)}
-                className={`snap-center flex h-9 shrink-0 items-center justify-center px-6 rounded-full transition-all duration-200 active:scale-95 ${
+                className={`snap-center flex h-12 shrink-0 items-center justify-center px-8 rounded-full transition-all duration-200 active:scale-95 ${
                   isActive 
-                    ? 'bg-primary text-white shadow-md shadow-primary/30' 
-                    : 'bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-300'
+                    ? 'bg-primary text-white shadow-xl shadow-primary/30' 
+                    : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
                 }`}
               >
-                <p className="text-[13px] font-bold whitespace-nowrap">{tab.label}</p>
+                <p className="text-xl font-bold whitespace-nowrap">{tab.label}</p>
               </button>
             );
           })}
-          <div className="shrink-0 w-4"></div>
+          <div className="shrink-0 w-8"></div>
         </div>
       </div>
 
-      <main className="flex-1 px-4 py-2 grid grid-cols-2 gap-x-3 gap-y-5 overflow-y-auto no-scrollbar content-start">
+      <main className="flex-1 px-8 py-4 grid grid-cols-2 gap-8 overflow-y-auto no-scrollbar content-start pb-48">
         {filteredAssets.length > 0 ? (
           filteredAssets.map((asset) => {
             const isClickable = asset.status === 'completed' || asset.status === 'original';
@@ -80,70 +71,63 @@ const AssetsScreen: React.FC<AssetsScreenProps> = ({ assets, activeTab, switchTa
               <div 
                 key={asset.id} 
                 onClick={() => isClickable && onSelectAsset(asset)}
-                className={`group flex flex-col bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm transition-all border border-slate-50 dark:border-slate-700/30 ${
-                  isClickable 
-                    ? 'cursor-pointer hover:shadow-md active:scale-[0.98]' 
-                    : 'cursor-default opacity-80'
+                className={`group flex flex-col bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-soft transition-all ring-1 ring-slate-100 dark:ring-slate-800 ${
+                  isClickable ? 'cursor-pointer hover:shadow-2xl active:scale-[0.98]' : 'opacity-80'
                 }`}
               >
                 <div className="relative w-full aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900">
                   <div 
-                    className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 ${isClickable ? 'group-hover:scale-110' : ''} ${asset.status === 'failed' ? 'grayscale opacity-50' : ''}`}
+                    className={`absolute inset-0 bg-cover bg-center transition-transform duration-1000 ${isClickable ? 'group-hover:scale-110' : ''} ${asset.status === 'failed' ? 'grayscale opacity-40' : ''}`}
                     style={{ backgroundImage: `url(${asset.imageUrl})` }}
                   ></div>
 
                   {asset.status === 'processing' && (
-                    <div className="absolute inset-0 bg-black/30 backdrop-blur-[1px] flex flex-col items-center justify-center gap-2">
+                    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center gap-4">
                       <div className="relative flex items-center justify-center">
-                        <div className="w-10 h-10 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                        <span className="material-symbols-outlined absolute text-white text-[18px] animate-pulse">sync</span>
+                        <div className="size-16 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
+                        <span className="material-symbols-outlined absolute text-white text-[28px] animate-pulse">sync</span>
                       </div>
-                      <span className="text-white text-xs font-bold tracking-wider">{t('label_processing')}</span>
+                      <span className="text-white text-sm font-bold tracking-widest uppercase">{t('label_processing')}</span>
                     </div>
                   )}
 
                   {asset.status === 'failed' && (
-                    <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="size-12 rounded-full bg-red-500 flex items-center justify-center shadow-lg shadow-red-500/40 border-2 border-white/20">
-                          <span className="material-symbols-outlined text-white text-[28px] font-bold">close</span>
-                        </div>
-                        <div className="bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
-                          <span className="text-white text-[10px] font-bold tracking-widest">{t('label_failed')}</span>
-                        </div>
+                    <div className="absolute inset-0 bg-rose-950/40 flex flex-col items-center justify-center">
+                      <div className="size-16 rounded-full bg-rose-500 flex items-center justify-center shadow-xl border-2 border-white/20">
+                        <span className="material-symbols-outlined text-white text-[32px] font-bold">close</span>
                       </div>
                     </div>
                   )}
 
                   {asset.isDynamic && asset.status === 'completed' && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="size-12 rounded-full bg-white/30 backdrop-blur-md border border-white/40 flex items-center justify-center shadow-lg transform transition-transform group-hover:scale-110">
-                        <span className="material-symbols-outlined text-white text-[32px] filled ml-0.5">play_arrow</span>
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="size-16 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 flex items-center justify-center shadow-2xl transition-transform group-hover:scale-110">
+                        <span className="material-symbols-outlined text-white text-[48px] filled ml-1">play_arrow</span>
                       </div>
                     </div>
                   )}
                 </div>
 
-                <div className="px-3 py-3.5 flex flex-col justify-center">
-                  <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">
+                <div className="px-6 py-6 flex flex-col justify-center">
+                  <h4 className="text-xl font-bold text-slate-800 dark:text-slate-100 truncate">
                     {asset.name}
                   </h4>
                   {asset.status === 'processing' && (
-                    <p className="text-[10px] font-bold text-primary mt-1">{t('label_queueing')}</p>
+                    <p className="text-xs font-bold text-primary mt-2 uppercase tracking-widest">{t('label_queueing')}</p>
                   )}
                   {asset.status === 'failed' && (
-                    <p className="text-[10px] font-bold text-red-500 mt-1">{t('label_fail_retry')}</p>
+                    <p className="text-xs font-bold text-rose-500 mt-2 uppercase tracking-widest">{t('label_fail_retry')}</p>
                   )}
                 </div>
               </div>
             );
           })
         ) : (
-          <div className="col-span-2 py-32 flex flex-col items-center justify-center text-slate-400 gap-4">
-            <div className="size-16 rounded-3xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center shadow-inner">
-              <span className="material-symbols-outlined text-3xl">photo_library</span>
+          <div className="col-span-2 py-40 flex flex-col items-center justify-center text-slate-400 gap-6">
+            <div className="size-24 rounded-[2rem] bg-slate-100 dark:bg-slate-800 flex items-center justify-center shadow-inner">
+              <span className="material-symbols-outlined text-5xl">photo_library</span>
             </div>
-            <p className="text-sm font-bold tracking-wide">{t('label_empty')}</p>
+            <p className="text-2xl font-bold opacity-60">{t('label_empty')}</p>
           </div>
         )}
       </main>

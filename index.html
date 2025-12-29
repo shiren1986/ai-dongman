@@ -3,7 +3,7 @@
 <html lang="zh-CN" class="dark">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta content="width=750, user-scalable=no" name="viewport"/>
     <title>灵动AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
@@ -29,25 +29,17 @@
                         "body": ["Noto Sans SC", "sans-serif"],
                     },
                     borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "2xl": "1rem",
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "3xl": "3rem",
+                        "4xl": "4rem",
                         "full": "9999px"
                     },
                     boxShadow: {
-                        'glow': '0 0 20px rgba(124, 58, 237, 0.3)',
-                    },
-                    animation: {
-                        'progress': 'loadProgress 2.5s ease-out forwards',
-                        'spin-slow': 'spin 3s linear infinite',
-                    },
-                    keyframes: {
-                        loadProgress: {
-                            '0%': { width: '5%' },
-                            '50%': { width: '65%' },
-                            '100%': { width: '100%' },
-                        }
+                        'glow': '0 0 40px rgba(124, 58, 237, 0.4)',
+                        'soft': '0 20px 60px rgba(0,0,0,0.15)',
                     }
                 },
             },
@@ -56,10 +48,42 @@
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        body { -webkit-tap-highlight-color: transparent; }
+        body { 
+            -webkit-tap-highlight-color: transparent; 
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        #root {
+            width: 750px;
+            height: 1624px;
+            position: relative;
+            background-color: #050505;
+            overflow: hidden;
+            transform-origin: center center;
+            flex-shrink: 0;
+        }
         .filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        input[type="radio"]:checked + div { border-color: #7c3aed; background-color: rgba(124, 58, 237, 0.05); }
     </style>
+    <script>
+        function scaleRoot() {
+            const root = document.getElementById('root');
+            const targetWidth = 750;
+            const targetHeight = 1624;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const scale = Math.min(windowWidth / targetWidth, windowHeight / targetHeight);
+            root.style.transform = `scale(${scale})`;
+        }
+        window.addEventListener('resize', scaleRoot);
+        window.addEventListener('load', scaleRoot);
+    </script>
 <script type="importmap">
 {
   "imports": {
@@ -71,7 +95,7 @@
 }
 </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-text-main-light dark:text-text-main-dark overflow-x-hidden">
+<body class="font-display">
     <div id="root"></div>
 </body>
 </html>

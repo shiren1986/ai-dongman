@@ -114,7 +114,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen max-w-md mx-auto relative bg-background-light dark:bg-background-dark overflow-hidden font-display">
+    <div className="w-full h-full relative bg-background-light dark:bg-background-dark overflow-hidden select-none">
       {renderScreen()}
     </div>
   );
