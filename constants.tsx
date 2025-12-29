@@ -155,7 +155,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     label_version: '版本号',
     label_play: '点击播放',
     label_queueing: '正在排队生成中...',
-    label_fail_retry: '生成失败，请重试',
+    label_fail_retry: '生成失败，金币已经退回，请重试',
     label_syncing: '云端同步中',
     label_sync_tip: '正在从云端下载最新模板素材...'
   },
@@ -220,7 +220,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     label_version: 'Version',
     label_play: 'Click to Play',
     label_queueing: 'In queue...',
-    label_fail_retry: 'Failed, please retry',
+    label_fail_retry: 'Failed, coins refunded, please retry',
     label_syncing: 'Syncing...',
     label_sync_tip: 'Downloading latest templates from cloud...'
   }
