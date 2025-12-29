@@ -150,12 +150,14 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     label_category_aesthetic: '唯美',
     label_nickname: '昵称',
     label_official_email: '官方邮箱',
-    label_contact_desc: '如有任何问题或建议，请随时联系',
+    label_contact_desc: '如有任何问题或建议，请随时联系一线支持团队。',
     label_about_desc: '灵动AI 致力于利用最尖端的生成式人工智能技术，为您打造极致的个性化数字分身体验。',
     label_version: '版本号',
     label_play: '点击播放',
     label_queueing: '正在排队生成中...',
-    label_fail_retry: '生成失败，请重试'
+    label_fail_retry: '生成失败，请重试',
+    label_syncing: '云端同步中',
+    label_sync_tip: '正在从云端下载最新模板素材...'
   },
   'en-US': {
     nav_library: 'Library',
@@ -186,7 +188,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     label_contact: 'Contact Us',
     label_about: 'About Us',
     label_uploaded: 'Click to upload',
-    label_upload_tip: 'Upload a clear front-facing photo with good lighting for best results.',
+    label_upload_tip: 'Upload a clear front-facing photo for best results.',
     label_file_type: 'JPG, PNG (Max 5MB)',
     label_suggestions: 'Suggestions',
     label_suggestion_1: 'Clear Front',
@@ -213,53 +215,13 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     label_category_aesthetic: 'Aesthetic',
     label_nickname: 'Nickname',
     label_official_email: 'Support Email',
-    label_contact_desc: 'If you have any questions, feel free to contact us',
+    label_contact_desc: 'Contact us for any questions or feedback.',
     label_about_desc: 'Vivid AI is dedicated to using generative AI to create ultimate personalized digital avatars.',
     label_version: 'Version',
     label_play: 'Click to Play',
     label_queueing: 'In queue...',
-    label_fail_retry: 'Failed, please retry'
-  },
-  'fr-FR': {
-    nav_library: 'Bibliothèque',
-    nav_assets: 'Mes Médias',
-    nav_settings: 'Paramètres',
-    header_upload: 'Télécharger',
-    header_language: 'Langue',
-    btn_generate: 'Générer',
-    btn_continue_gen: 'Continuer',
-    label_coins: 'Mes Pièces',
-    label_lang: 'Langue',
-    label_all: 'Tout',
-    label_hot: 'Populaire',
-    label_about: 'À propos'
-  },
-  'es-ES': {
-    nav_library: 'Biblioteca',
-    nav_assets: 'Mis Activos',
-    nav_settings: 'Ajustes',
-    header_upload: 'Subir',
-    header_language: 'Idioma',
-    btn_generate: 'Generar',
-    btn_continue_gen: 'Continuar',
-    label_coins: 'Mis Monedas',
-    label_lang: 'Idioma',
-    label_all: 'Todo',
-    label_hot: 'Popular',
-    label_about: 'Acerca de'
-  },
-  'de-DE': {
-    nav_library: 'Bibliothek',
-    nav_assets: 'Meine Medien',
-    nav_settings: 'Einstellungen',
-    header_upload: 'Hochladen',
-    header_language: 'Sprache',
-    btn_generate: 'Generieren',
-    btn_continue_gen: 'Weiter',
-    label_coins: 'Meine Münzen',
-    label_lang: 'Sprache',
-    label_all: 'Alle',
-    label_hot: 'Beliebt',
-    label_about: 'Über uns'
+    label_fail_retry: 'Failed, please retry',
+    label_syncing: 'Syncing...',
+    label_sync_tip: 'Downloading latest templates from cloud...'
   }
 };
