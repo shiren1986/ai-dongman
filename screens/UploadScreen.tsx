@@ -68,7 +68,6 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
 
   return (
     <div className="w-full h-full flex flex-col bg-background-light dark:bg-background-dark relative overflow-hidden">
-      {/* 顶部导航 - 增大比例 */}
       <nav className="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md shrink-0">
         <div className="flex items-center justify-between px-6 h-20">
           <button 
@@ -83,14 +82,13 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
       </nav>
 
       <main className="flex-1 flex flex-col px-10 pt-6 pb-20 overflow-y-auto no-scrollbar">
-        {/* 顶部提示 - 增大字号 */}
         <div className="mb-8 text-center px-4">
           <p className="text-slate-500 dark:text-slate-400 text-xl font-bold leading-relaxed">
             {t('label_upload_tip')}
           </p>
         </div>
 
-        {/* 上传区域 - 适配 750px 的 3:4 比例 */}
+        {/* Upload Box standardized to 512/768 ratio */}
         <div className="mb-12 w-full relative">
           <input 
             type="file" 
@@ -101,7 +99,7 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
           />
           <div 
             onClick={triggerUpload}
-            className="relative w-full aspect-[3/4] rounded-[4rem] border-4 border-dashed border-primary/20 dark:border-primary/40 bg-white dark:bg-surface-dark flex flex-col items-center justify-center p-6 transition-all duration-300 hover:border-primary shadow-soft overflow-hidden cursor-pointer active:scale-[0.99]"
+            className="relative w-full aspect-[512/768] rounded-[4rem] border-4 border-dashed border-primary/20 dark:border-primary/40 bg-white dark:bg-surface-dark flex flex-col items-center justify-center p-6 transition-all duration-300 hover:border-primary shadow-soft overflow-hidden cursor-pointer active:scale-[0.99]"
           >
             {uploadedImage ? (
               <div className="absolute inset-0 w-full h-full animate-in fade-in duration-700">
@@ -129,10 +127,10 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
               </div>
             )}
 
-            {/* 已选模板缩略图 - 边框缩小调整 (size-48保持, p-3 -> p-1.5, ring-[12px] -> ring-4) */}
+            {/* Template thumbnail standardized to 512/768 ratio */}
             {template && (
               <div className="absolute top-10 left-10 z-20">
-                <div className="size-48 rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-800 p-1.5 border border-slate-100 dark:border-slate-700 shadow-2xl backdrop-blur-md ring-4 ring-white/20">
+                <div className="size-48 aspect-[512/768] h-auto rounded-[2.5rem] overflow-hidden bg-white dark:bg-slate-800 p-1.5 border border-slate-100 dark:border-slate-700 shadow-2xl backdrop-blur-md ring-4 ring-white/20">
                   <img src={template.imageUrl} alt="Template" className="w-full h-full object-cover rounded-[2rem]" />
                 </div>
               </div>
@@ -140,7 +138,6 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
           </div>
         </div>
 
-        {/* 照片建议 - 优化网格 */}
         <div className="w-full space-y-6 mb-12">
           <h3 className="text-slate-900 dark:text-white text-2xl font-black px-2">{t('label_suggestions')}</h3>
           <div className="grid grid-cols-3 gap-6">
@@ -158,7 +155,6 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
           </div>
         </div>
 
-        {/* 底部按钮 - 增大比例 */}
         <div className="mt-auto pt-8 flex flex-col gap-6 w-full">
           <div className="flex items-center justify-center gap-3 py-2">
             <span className="material-symbols-outlined text-[28px] text-amber-400 filled">monetization_on</span>
@@ -180,44 +176,31 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
         </div>
       </main>
 
-      {/* 成功弹窗 - 完全重构为大尺寸 */}
       {showSuccessModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center">
           <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={handleCloseModal}></div>
-          
           <div className="relative w-[640px] bg-white dark:bg-slate-950 rounded-[4.5rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] flex flex-col items-center animate-in zoom-in duration-300">
             <button onClick={handleCloseModal} className="absolute top-8 right-8 z-30 size-14 flex items-center justify-center bg-black/30 backdrop-blur-2xl rounded-full text-white active:scale-90 transition-all">
               <span className="material-symbols-outlined text-[32px] font-bold">close</span>
             </button>
-            
-            <div className="relative w-full aspect-[4/5] overflow-hidden">
-              <img src={template?.imageUrl || 'https://picsum.photos/seed/success/800/1000'} alt="Generated" className="w-full h-full object-cover" />
+            <div className="relative w-full aspect-[512/768] overflow-hidden">
+              <img src={template?.imageUrl || 'https://picsum.photos/seed/success/800/1200'} alt="Generated" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-950 via-transparent to-transparent"></div>
             </div>
-            
             <div className="relative -mt-16 z-20">
               <div className="size-32 rounded-full bg-emerald-500 border-[10px] border-white dark:border-slate-950 shadow-2xl flex items-center justify-center animate-bounce-short">
                 <span className="material-symbols-outlined text-white text-[72px] font-black">check</span>
               </div>
             </div>
-            
             <div className="px-10 pt-6 pb-12 text-center flex flex-col items-center gap-6 w-full">
               <h2 className="text-5xl font-black text-slate-900 dark:text-white leading-tight">{t('label_success')}</h2>
               <p className="text-slate-500 dark:text-slate-400 text-xl font-bold leading-relaxed px-4">{t('label_success_desc')}</p>
-              
               <div className="w-full flex flex-col gap-5 mt-4">
-                <button 
-                  onClick={() => { onStartGeneration(); setShowSuccessModal(false); }} 
-                  className="w-full h-20 bg-primary text-white rounded-[2.5rem] font-black text-2xl flex items-center justify-center gap-4 shadow-glow active:scale-[0.98] transition-all"
-                >
+                <button onClick={() => { onStartGeneration(); setShowSuccessModal(false); }} className="w-full h-20 bg-primary text-white rounded-[2.5rem] font-black text-2xl flex items-center justify-center gap-4 shadow-glow active:scale-[0.98] transition-all">
                   <span className="material-symbols-outlined text-[36px] filled">photo_library</span>
                   {t('label_view_assets')}
                 </button>
-                
-                <button 
-                  onClick={handleCloseModal} 
-                  className="w-full h-20 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-[2.5rem] font-black text-2xl flex items-center justify-center gap-4 active:scale-[0.98] transition-all"
-                >
+                <button onClick={handleCloseModal} className="w-full h-20 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-[2.5rem] font-black text-2xl flex items-center justify-center gap-4 active:scale-[0.98] transition-all">
                   <span className="material-symbols-outlined text-[36px]">add_photo_alternate</span>
                   {t('btn_continue_gen')}
                 </button>
@@ -226,7 +209,6 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ template, onBack, onStartGe
           </div>
         </div>
       )}
-
       <style>{`
         @keyframes bounceShort {
           0%, 100% { transform: translateY(0); }

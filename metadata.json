@@ -1,5 +1,5 @@
 {
-  "name": "灵动AI - 2D Dynamic Avatar Generator",
+  "name": "Dynamic AI-Stylized Avatar",
   "description": "An advanced AI-powered avatar generator for creating fresh, dynamic 2D anime-style characters with a sleek mobile-first UI.",
   "requestFramePermissions": [
     "camera"

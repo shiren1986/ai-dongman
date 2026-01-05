@@ -45,10 +45,10 @@ const SimpleInfoScreen: React.FC<SimpleInfoScreenProps> = ({ title, type, onBack
                 {t('label_official_email')}
               </p>
               <a 
-                href="mailto:support@vividai.com" 
+                href="mailto:support@dynamic-ai.com" 
                 className="text-4xl font-black text-primary hover:text-primary/80 transition-all block relative z-10 break-all"
               >
-                support@vividai.com
+                support@dynamic-ai.com
               </a>
             </div>
           </div>
@@ -56,14 +56,15 @@ const SimpleInfoScreen: React.FC<SimpleInfoScreenProps> = ({ title, type, onBack
           <div className="flex flex-col items-center gap-12 animate-in fade-in slide-in-from-bottom-8 duration-700 w-full">
             <div className="relative">
               <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-full scale-125"></div>
-              <div className="relative size-48 rounded-[4rem] bg-white dark:bg-slate-950 shadow-2xl flex items-center justify-center p-3 ring-1 ring-slate-100 dark:ring-white/10">
-                <img src="https://picsum.photos/seed/splash/500/500" className="size-full object-cover rounded-[3.2rem]" alt="Logo" />
+              {/* 修改为黑色背景以匹配图标 */}
+              <div className="relative size-48 rounded-[4rem] bg-black dark:bg-black shadow-2xl flex items-center justify-center p-0 ring-4 ring-primary/20 overflow-hidden">
+                <img src="logo.png" className="size-full object-cover" alt="Logo" />
               </div>
             </div>
 
             <div className="space-y-3">
               <h3 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">{t('label_about')}</h3>
-              <p className="text-primary font-black tracking-[0.3em] uppercase text-xl">Vivid AI Studio</p>
+              <p className="text-primary font-black tracking-tight uppercase text-xl px-4">Dynamic AI-Stylized Avatar Studio</p>
             </div>
 
             <div className="bg-slate-100 dark:bg-slate-900/80 px-10 py-4 rounded-full border border-slate-200/50 dark:border-white/5 shadow-inner">
@@ -77,8 +78,8 @@ const SimpleInfoScreen: React.FC<SimpleInfoScreenProps> = ({ title, type, onBack
         )}
       </main>
       
-      <div className="pb-16 text-center opacity-30 pointer-events-none">
-        <p className="text-lg font-black tracking-[0.5em] uppercase text-slate-400">Vivid AI © 2025</p>
+      <div className="pb-16 text-center opacity-30 pointer-events-none px-4">
+        <p className="text-lg font-black tracking-tight uppercase text-slate-400">Dynamic AI-Stylized Avatar © 2025</p>
       </div>
     </div>
   );

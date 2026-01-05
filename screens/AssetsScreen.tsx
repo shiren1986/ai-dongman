@@ -39,7 +39,6 @@ const AssetsScreen: React.FC<AssetsScreenProps> = ({ assets, activeTab, switchTa
 
   return (
     <div className="w-full h-full flex flex-col relative bg-background-light dark:bg-background-dark overflow-hidden">
-      {/* 顶部标签栏 - 适配 750px 大比例 */}
       <div className="sticky top-0 z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md pt-10 pb-6 shrink-0 border-b border-slate-100 dark:border-slate-800/50">
         <div className="flex gap-4 px-8 overflow-x-auto no-scrollbar snap-x">
           {tabs.map((tab, idx) => {
@@ -63,11 +62,12 @@ const AssetsScreen: React.FC<AssetsScreenProps> = ({ assets, activeTab, switchTa
         </div>
       </div>
 
-      {/* 素材网格 - 适配模板库尺寸 */}
       <main className="flex-1 px-8 py-8 grid grid-cols-2 gap-8 overflow-y-auto no-scrollbar content-start pb-48">
         {filteredAssets.length > 0 ? (
           filteredAssets.map((asset) => {
             const isClickable = asset.status === 'completed' || asset.status === 'original';
+            // Standardized ratio for all assets (512/768 = 2/3)
+            const containerAspect = 'aspect-[512/768]';
             
             return (
               <div 
@@ -77,7 +77,7 @@ const AssetsScreen: React.FC<AssetsScreenProps> = ({ assets, activeTab, switchTa
                   isClickable ? 'cursor-pointer' : 'opacity-80'
                 }`}
               >
-                <div className="relative w-full aspect-[3/4] overflow-hidden rounded-[3rem] bg-slate-100 dark:bg-slate-900 shadow-soft ring-1 ring-slate-200 dark:ring-slate-800/50">
+                <div className={`relative w-full ${containerAspect} overflow-hidden rounded-[3rem] bg-slate-100 dark:bg-slate-900 shadow-soft ring-1 ring-slate-200 dark:ring-slate-800/50`}>
                   <div 
                     className={`absolute inset-0 bg-cover bg-center transition-all duration-1000 ${isClickable ? 'group-hover:scale-110' : ''} ${asset.status === 'failed' ? 'grayscale opacity-30' : ''}`}
                     style={{ backgroundImage: `url(${asset.imageUrl})` }}
@@ -109,7 +109,6 @@ const AssetsScreen: React.FC<AssetsScreenProps> = ({ assets, activeTab, switchTa
                     </div>
                   )}
                   
-                  {/* 底部渐变蒙版，用于文字可读性 */}
                   <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
                 </div>
 

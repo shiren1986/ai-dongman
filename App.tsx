@@ -20,7 +20,7 @@ const App: React.FC = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [selectedAssetId, setSelectedAssetId] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [language, setLanguage] = useState('zh-CN');
+  const [language, setLanguage] = useState('en-US');
   const [assets, setAssets] = useState<Asset[]>(MOCK_ASSETS);
   const [userAvatar, setUserAvatar] = useState('https://picsum.photos/seed/user/300/300');
 
@@ -33,7 +33,7 @@ const App: React.FC = () => {
   }, [isDarkMode]);
 
   const t = (key: string) => {
-    return TRANSLATIONS[language]?.[key] || TRANSLATIONS['zh-CN'][key] || key;
+    return TRANSLATIONS[language]?.[key] || TRANSLATIONS['en-US'][key] || key;
   };
 
   const navigate = (screen: Screen, data?: any) => {

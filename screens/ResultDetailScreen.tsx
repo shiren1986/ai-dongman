@@ -26,6 +26,9 @@ const ResultDetailScreen: React.FC<ResultDetailScreenProps> = ({ asset, onBack, 
     setIsPlaying(!isPlaying);
   };
 
+  // Standardized detailed view aspect ratio for both dynamic and static assets
+  const detailAspect = 'aspect-[512/768]';
+
   return (
     <div className="w-full h-full flex flex-col bg-background-light dark:bg-background-dark overflow-hidden">
       <nav className="shrink-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md z-10 pt-4">
@@ -43,7 +46,7 @@ const ResultDetailScreen: React.FC<ResultDetailScreenProps> = ({ asset, onBack, 
         <div className="flex-1 flex items-center justify-center p-8 min-h-0">
           <div 
             onClick={togglePlay}
-            className="relative w-full h-full max-h-[1000px] rounded-[4rem] overflow-hidden bg-white dark:bg-slate-900 shadow-glow ring-1 ring-slate-100 dark:ring-white/5 cursor-pointer group"
+            className={`relative w-full ${detailAspect} max-h-[1100px] rounded-[4rem] overflow-hidden bg-white dark:bg-slate-900 shadow-glow ring-1 ring-slate-100 dark:ring-white/5 cursor-pointer group`}
           >
             <div className="absolute inset-0 bg-cover bg-center blur-[100px] opacity-20 dark:opacity-40 scale-125" style={{ backgroundImage: `url(${asset.imageUrl})` }}></div>
 
